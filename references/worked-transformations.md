@@ -1,6 +1,6 @@
 # Worked transformations: raw system material → paper material
 
-This file teaches the core skill by example: how material that existed in a system, its docs, or an earlier version was re-represented as paper material, why that worked, and what it cost. Entries are organized by **transformation move**, not by paper. Read it when you hold a pile of material and need to see what a successful re-cut looks like, or when a draft reads like a catalog and you want to know which move it is missing. Find the move whose recognition cue matches your system; borrow its decision logic; then run its failure mode against your draft.
+This file teaches the core skill by example: how material that existed in a system, its docs, or an earlier version was re-represented as paper material, why that worked, and what it cost. Entries are organized by **transformation move**, not by paper. Read it when you hold a pile of material and need to see what a successful re-cut looks like, or when a draft reads like a catalog or follows the design package's own order and you want to know which move it is missing (SKILL.md stages 3–5 and 9). Find the move whose recognition cue matches your system; borrow its decision logic; then run its failure mode against your draft.
 
 ## Contents
 
@@ -20,7 +20,7 @@ This file teaches the core skill by example: how material that existed in a syst
 | 12 | Soft property → method + proxy + bias table + conventional evidence | Your best selling point is an adjective | Raft |
 | 13 | Closed system → parity + substrate contract | Nothing can be released; best result is "no worse than X" | Pathways |
 | 14 | One big system → several papers split by evidence environment | Candidate theses need different experimental setups | Ceph, CRUSH, RADOS |
-| C1–C5 | Counterfactual rewrites | Material that was present but unused | HDFS, Ray, Spark, AlphaTensor, a hypothetical |
+| C1–C6 | Counterfactual rewrites | Material that was present but unused; a draft that follows the design package | HDFS, Ray, Spark, AlphaTensor, two hypotheticals |
 | — | How to use these | | |
 
 Each entry has five parts: **Raw** (what existed), **Paper** (what the paper made of it), **Decision logic** (why it worked, including its preconditions), **Cost and aging** (what it invited or what broke later), and **Cue** ("you are probably looking at this move in your own system when…").
@@ -71,7 +71,7 @@ Each entry has five parts: **Raw** (what existed), **Paper** (what the paper mad
 
 **Paper.** TrueTime is three methods in Table 1, with `TT.now()` returning an interval. §3 is about 1.5 of 14 pages, but every other section points to it. §4 states three invariants, two rules (Start, Commit Wait) and a four-line proof, then re-derives the features one by one. The abstract makes the API the grammatical subject. §2 describes the substrate first, trimmed to the objects §4 needs. SQL gets one sentence ("We will not go into detail about the query language"); "for space reasons, we will only describe the spanserver"; an abandoned design costs one sentence. The "1D" row (commit wait disabled: 9.4 ms vs 14.4 ms) prices the mechanism, and epsilon becomes a dial and a research agenda.
 
-**Decision logic.** Reification turns a nuisance (clock skew) into a return value that can carry rules and a proof, which does not depend on the system's maturity. The interface passes name removal ("now is an interval"). One decision fans out to three features. The real opponent was a belief (general 2PC is too expensive; clocks can't be trusted), not the stated gap (Bigtable awkward, Megastore slow).
+**Decision logic.** Reification turns a nuisance (clock skew) into a return value that can carry rules and a proof, which does not depend on the system's maturity. The interface passes name removal ("now is an interval"). One decision fans out to three features. What the paper actually changed was a belief in the field (general 2PC is too expensive; clocks can't be trusted), not the stated gap (Bigtable awkward, Megastore slow).
 
 **Cost and aging.** Over-attribution: snapshot reads rest mostly on multiversioning plus safe time, and Brewer (2017) rescoped TrueTime's role in availability ("it is really Google's wide-area network"); "linchpin" invited a CAP over-reading. Scope gap: microbenchmark zones sat less than 1 ms apart. Users adopted Spanner for SQL; the 2017 paper says "today's Spanner is very different from what was described there" and mentions TrueTime once in its body. The proof and interface lasted; the numbers did not.
 
@@ -95,7 +95,7 @@ Each entry has five parts: **Raw** (what existed), **Paper** (what the paper mad
 
 **Paper.** "A missing principle is making attention algorithms IO-aware" (abstract, sentence 3). Standard attention is rewritten as Algorithm 0 in HBM reads and writes, so it reads as a bad I/O algorithm before the new one appears. The ingredients are disclaimed ("two well-established techniques"). Theorem 2 and a lower bound are scoped ("for all M in [d, Nd]"). Fig. 2 shows more FLOPs (75.2 vs 66.6 GFLOPs), far less HBM traffic (4.4 vs 40.3 GB), and less time (7.3 vs 41.7 ms). Kernel engineering is one sentence; the FMHA lineage sits in acknowledgments and Appendix E; against Rabe and Staats the delta is "same blocks, different objective." Two names: IO-aware (idea), FlashAttention (artifact).
 
-**Decision logic.** When ingredients are old, novelty moves to the objective. A swapped metric recasts incumbents as having optimized the wrong quantity, and one proxy-versus-outcome figure is the evidence for the principle. The theorem works as a legitimacy device at an ML venue. Precondition: a cost model that tracks reality over the claimed range.
+**Decision logic.** When ingredients are old, novelty moves to the objective. A swapped metric recasts incumbents as having optimized the wrong quantity, and one proxy-versus-outcome figure is the evidence for the principle. The theorem states the IO-complexity claim in a form an ML venue values, and the claim rests on it. Precondition: a cost model that tracks reality over the claimed range.
 
 **Cost and aging.** The block-size sweep shows runtime following HBM accesses only "up to a point" (above about 256 it is "bottlenecked by other factors"); the paper shows the bend, which is what makes the rest credible. FlashAttention-2 and -3 superseded Algorithm 1 while "IO-aware" survived. Lineage is nearly invisible in the main text. Promised extensions were not demonstrated.
 
@@ -135,7 +135,7 @@ Each entry has five parts: **Raw** (what existed), **Paper** (what the paper mad
 
 **Paper.** The introduction gives four observations, each paired with its consequence (failures are the norm → monitoring is integral; huge files → block sizes revisited; append-mostly → client caching "loses its appeal"; co-design → relaxed consistency plus atomic append). §2.1 lists assumptions with numbers, and every subsection of §§2–5 serves one of them. The recurring paragraph is choice → benefits "First… Second…" → cost → why the cost hasn't bitten, often with an anecdote. The consistent/defined table turns "weak consistency" into a precise middle ground. §9 bounds transfer to "data processing tasks of a similar magnitude and cost consciousness."
 
-**Decision logic.** A premise register makes a messy system read as a derivation and lets readers decide whether it applies to them. Each mechanism becomes a forced move from a stated fact.
+**Decision logic.** A premise register gives a messy system reasons a reader can check and lets readers decide whether it applies to them. Each mechanism reads as a response to a stated fact. The premises were observed facts with numbers, from production clusters and workload traces. A register invented so that the design appears to follow from it (concepts defined, requirements derived, the design shown to satisfy each) is the deduction-driven failure, not this move.
 
 **The honesty problem.** The paper says its design "has been driven by" the observations. The facts were true; the causation was reversed. The real drivers were shipping fast and controlling every client (Gobioff: "we controlled both the horizontal and the vertical"), and the second was load-bearing for relaxed consistency. Argument order is fine; asserting false history is not. The fix costs almost nothing: write "is justified by", and state the boundary condition ("this works because the file-system team controls the clients"). Test: would a reader deciding whether the design applies to *their* system be misled by the omission?
 
@@ -147,9 +147,9 @@ Each entry has five parts: **Raw** (what existed), **Paper** (what the paper mad
 
 **Raw.** Dynamo: a production store for "hundreds of services", instances of a couple hundred nodes, every core technique from the literature (consistent hashing, vector clocks, sloppy quorum, hinted handoff, Merkle trees, gossip), a latency SLA, business numbers that could not be published, three partitioning strategies over time, and a long list of production concerns.
 
-**Paper.** It opens on operating reality (carts must work while "data centers are being destroyed by tornados"). §2.1 states four-part requirements that pre-excuse everything the system doesn't do; §2.2 states the contract (300 ms at the 99.9th percentile at 500 requests/s). Related work comes before design and ends in four differentiators. Table 1 (problem, technique, advantage) maps the whole before §4 follows its rows, each written as textbook version → what breaks here → our variant. The contribution sentence tells reviewers where to look: "the evaluation of how different techniques can be combined." §4 opens by listing what it will not cover; §6.2 promotes the three partitioning strategies because the lesson lives in the evolution; the shopping cart shows deleted items resurfacing; (N, R, W) settings form a small taxonomy of uses; withheld numbers are declared as withheld.
+**Paper.** It opens on operating reality (carts must work while "data centers are being destroyed by tornados"). §2.1 states four-part requirements drawn from operating reality; §2.2 states the contract (300 ms at the 99.9th percentile at 500 requests/s). Related work comes before design and ends in four differentiators. Table 1 (problem, technique, advantage) maps the whole before §4 follows its rows, each written as textbook version → what breaks here → our variant. One sentence states the kind of contribution: "the evaluation of how different techniques can be combined." §4 opens by listing what it will not cover; §6.2 promotes the three partitioning strategies because the lesson lives in the evolution; the shopping cart shows deleted items resurfacing; (N, R, W) settings form a small taxonomy of uses; withheld numbers are declared as withheld.
 
-**Decision logic.** With no novel component, the requirement turns technique selection into forced moves, the table supplies the map, and telemetry against a stated contract is the evidence. Naming the contribution type stops reviewers searching for a novelty that isn't claimed.
+**Decision logic.** With no novel component, the requirement, taken from how the service had to behave, gives each technique choice its reason; the table supplies the map, and telemetry against a stated contract is the evidence. Stating the contribution's kind plainly, once, means the paper need not defend a novelty it does not claim.
 
 **Cost and aging.** DynamoDB later "shared most of the name … but little of its architecture" (Multi-Paxos, leader-based strong reads). What lasted was the SLA framing, the vocabulary and the trade-off space. The "clearly defined consistency window" was never defined or measured. The principles (symmetry, decentralization) exclude nothing. Telemetry with no baseline was accepted on Amazon's credibility; an unknown group would need more.
 
@@ -211,13 +211,13 @@ Each entry has five parts: **Raw** (what existed), **Paper** (what the paper mad
 
 ## Counterfactual rewrites
 
-These are **not what the authors did**. Each uses material that was present, according to the case studies, to show a move that was available and unused. Use them to see a move from the inside, not as claims about what would have been accepted.
+These are **not what the authors did**. C1–C4 each use material that was present, according to the case studies, to show a move that was available and unused. C5 and C6 are hypothetical and use no case material. Use them to see a move from the inside, not as claims about what would have been accepted.
 
 ### C1. HDFS: the thesis it had and did not use (counterfactual)
 
 **Present.** The MSST 2010 paper is organized by component, with defaults in the prose ("The default heartbeat interval is three seconds") and no "why not X" anywhere. Its best material sits in §IV–V: about 0.8% of nodes lost per month, about 20 bad replicas found per fortnight, 0.5–1% of nodes not surviving a power-on restart, a three-tier benchmark framing, and the admission that "our assumption that applications will create a small number of large files was flawed." Its single-writer model is what the GFS team later said it would prefer to record append. GFS is never named as the origin.
 
-**Rewrite.** Thesis: *an open implementation of the GFS design point survives contact with a diverse public user base; here is where the inherited assumptions broke.* The opponent becomes the GFS premise set, stated as a premise register and checked one by one against Yahoo!'s operational data (move 9 run in reverse). Places where HDFS diverged from GFS (single writer instead of record append) become alternatives-register entries with reasons. The component descriptions shrink into an Implementation section.
+**Rewrite.** Thesis: *an open implementation of the GFS design point survives contact with a diverse public user base; here is where the inherited assumptions broke.* The state of the field the paper changes is the GFS premise set, stated as a premise register and checked one by one against Yahoo!'s operational data (move 9 run in reverse). Places where HDFS diverged from GFS (single writer instead of record append) become alternatives-register entries with reasons. The component descriptions shrink into an Implementation section.
 
 **Cost.** It requires naming the lineage and conceding that the design is inherited; the novelty becomes data and candor, not mechanism.
 
@@ -253,9 +253,23 @@ These are **not what the authors did**. Each uses material that was present, acc
 
 **Recognition.** Any headline number taken from a release, migration or A/B rollout that bundled several changes. Production docs report outcomes per rollout, not per mechanism, so this situation is the default rather than the exception.
 
+### C6. Design-led draft → problem-led paper (hypothetical, for a new system)
+
+This entry is invented to illustrate a failure common in drafts written directly from a design package; it describes no real system or paper.
+
+**Present.** A stream-processing system's design package is organized around its own named tiers and a coined unit of work. The first draft follows the package. It opens with an invented pipeline scenario, defines the coined unit, derives three requirements from the definition, and gives one section per tier, each ending by noting which requirement it satisfies. Related work says that micro-batch engines and continuous-operator engines each lack one of the three requirements. Claims are hedged where they appear and again in a closing list of what the paper does not claim.
+
+**Rewrite.** (1) Read the field's progress: what micro-batch and continuous-operator engines each achieved, and what their success exposed (for example, the cost of moving operator state when load shifts). (2) State that problem in two or three sentences without the system's name, its tiers, or its coined unit. (3) Replace the derived requirements with the problem's observed difficulties, each traced to a measurement or a documented practice. (4) Present the idea that addresses those difficulties, then the system as its construction; the tiers become implementation, and the coined unit appears only if a mechanism needs a handle the reader will reuse. (5) Illustrate the central mechanism with a trace from a real deployment, where that mechanism is introduced. (6) Size each claim to its evidence, state scope once, and delete the requirement-to-section sentences.
+
+**What it buys.** A reader can check the opportunity against literature they know. The requirements disappear because the difficulties are the field's, not the draft's. Related work becomes an account of what each line solved instead of a row of missing properties, and most of the hedges go with the claims they were protecting.
+
+**Recognition.** The section list maps one-to-one onto the design package's chapters; the problem statement uses the system's vocabulary; deleting the opening scenario leaves the problem stated nowhere; requirements are numbered so later sections can claim them. If the authors have already rejected a draft like this, re-conceive from the problem rather than revising it (`diagnostics.md` §6).
+
 ---
 
 ## How to use these
+
+**Every move starts from a problem the field recognizes.** These moves describe what papers did with real material: observed facts, real workloads, measured behavior. None licenses a coined framework or a derivation the material does not support. A premise register is built from measured premises, an analogy from a mapping that holds, a requirement from operating reality. Find the field's problem first (SKILL.md stage 2); the moves here shape how the paper presents the work that addresses it.
 
 **Match the cue, not the surface.** Look for the entry whose *raw material* resembles yours, not the one whose domain does. A storage system can need move 6 (a swapped metric), and an ML system can need move 9 (a premise register). Several cues may match; strong papers combine two moves (Spanner: interface plus proof; FlashAttention: metric plus theorem; vLLM: analogy plus a waste metric defined before the design).
 
@@ -266,6 +280,8 @@ These are **not what the authors did**. Each uses material that was present, acc
 **Do not copy the paper's outline.** Spanner's substrate-first order worked because §2 was trimmed to the objects §4 needed. Borg's concern-organized form worked because of a decade of operation and readers with no other access. Nature's three tiers worked because outputs were checkable without the system. An outline is the product of a move, a venue and the evidence at hand; copy the reasoning that produced it and let your own material produce the outline.
 
 **If no move matches, treat that as information.** Either your system's organizing principle is a kind not seen here (these moves are a vocabulary, not a closed list; see `finding-the-contribution.md` §5), or the material has not yet been read for decisions (go back to `reading-a-system.md`). Inventing a spine to fit a move is how vapor papers get written.
+
+**Seed vocabulary is raw material, not a move.** When the system arrives with its own concepts (named layers, an analogy, a coined unit of work) or the brief supplies favored terms, it can look as if a move has already been made. Translate the vocabulary into the field's terms and see what it explains: keep its substance where it organizes a real mechanism, and drop the label where the field already has a term. Move 5 is different in kind: paging was the readers' vocabulary, not the team's, and the mapping was published with its departures. If the problem statement changes when the seed vocabulary is removed, the vocabulary is framing the paper (C6).
 
 **Prefer moves that place the thesis at the WHAT layer.** Across the entries, what survived was an interface (TrueTime, tasks and actors), a metric (IO-awareness, cell compaction), a formulation (TensorGame), a vocabulary (Dynamo's requirements, GFS's consistent/defined) or a stated premise set. What aged was a particular control plane, loop order, module list or quantitative premise. If your chosen move puts the thesis on a component the roadmap will replace, label it as a snapshot or move the thesis up a layer.
 

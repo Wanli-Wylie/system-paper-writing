@@ -1,6 +1,8 @@
 # Evidence and venue
 
-Read this when you are designing the evaluation, choosing baselines, placing limitations, or deciding which venue and contribution type the evidence can carry. It goes deeper on stages 3 and 6 of SKILL.md. The organizing claim: the paper's real claim is whatever its evidence tests, and context (venue, contribution type, maturity, openness, authority) sets the exchange rate between kinds of evidence.
+Read this when you are designing the evaluation, choosing baselines, placing limitations, or deciding which venue and contribution type the evidence can carry. It goes deeper on stages 4 and 7 of SKILL.md. The organizing claim: the paper's real claim is whatever its evidence tests, and context (venue, contribution type, maturity, openness, authority) sets the exchange rate between kinds of evidence.
+
+The ledgers, maps, and tests here are the writer's analysis. Their output is the work: an experiment run, a claim resized, a baseline strengthened, a scope stated once. They do not appear in the paper as such, and the paper does not narrate them; it states right-sized claims with their evidence.
 
 Contents
 1. Type the claims before designing experiments
@@ -8,7 +10,7 @@ Contents
 3. The null-idea test and isolation designs
 4. Kinds of evidence, and stacking them
 5. Baselines
-6. Limitations, scope, and lessons
+6. Limitations, scope, lessons, and unfinished evaluations
 7. Venue currencies
 8. Contribution types and the evidential debt each owes
 9. Maturity, openness, and authority
@@ -73,7 +75,7 @@ Run it in writing: for each abstract number, write one sentence naming what else
 
 Designs 1–4 are internal and cheap; design 5 answers the question reviewers and critics actually ask. When budget allows only one expensive experiment, it usually belongs to design 5 on the claim the paper cannot lose.
 
-**Tradeoff opponents.** When the opponent is a believed tradeoff, the decisive measurement is on the side that was supposed to lose: PyTorch's "within 17% of the fastest framework", Spanner's commit-wait cost, Pathways' single controller at parity. Measuring only the side you were expected to win confirms nothing the reader doubted.
+**When the work dissolves a tradeoff.** When what the work changes is a believed tradeoff, the decisive measurement is on the side that was supposed to lose: PyTorch's "within 17% of the fastest framework", Spanner's commit-wait cost, Pathways' single controller at parity. Measuring only the side you were expected to win confirms nothing the reader doubted.
 
 For the common production case, a headline number from a rollout that bundled several changes, see the worked example in `worked-transformations.md` C5.
 
@@ -118,9 +120,9 @@ Telemetry alone shows that something happened, not why. Borg shows how to give i
 
 Dynamo is the contrast: 30 days of 99.9th-percentile latency at (3,2,2) holds nothing fixed, and its one comparative datum (client-driven coordination, 99.9th read 30.4 ms vs 68.9 ms) is its most convincing. In internal material, the experiment-shaped telemetry often already exists as staged rollouts, canaries and A/B launches; these are natural experiments if exactly one thing changed between arms (§10).
 
-### 4.4 Theory as a legitimacy device, with its limit shown
+### 4.4 Theory where a claim rests on it, with its limit shown
 
-A theorem buys legitimacy at venues that pay in theory (NeurIPS especially), and it is honest only if the paper shows where the model stops predicting. FlashAttention scoped its lower bound ("for all M in [d, Nd]") and its Fig. 2 middle panel shows the bend; FlashAttention-2 later won on factors outside that model, so a claim that the model fully explains runtime would have aged badly. Spanner proves external consistency in four lines but argues the clock bound socially ("bad CPUs are 6 times more likely than bad clocks"). Write the proof's assumptions next to the measurement that tests whether the hardware meets them, and put the place where model and machine diverge in a figure, not a footnote.
+A theorem or formal model belongs in the paper when a claim rests on it. Definitions that restate prose, notation introduced to look rigorous, and a model from which no result follows are artificial formalization, and reviewers read them as such. Venues that pay in theory (NeurIPS especially) value a theorem that carries a claim, and it is honest only if the paper shows where the model stops predicting. FlashAttention scoped its lower bound ("for all M in [d, Nd]") and its Fig. 2 middle panel shows the bend; FlashAttention-2 later won on factors outside that model, so a claim that the model fully explains runtime would have aged badly. Spanner proves external consistency in four lines but argues the clock bound socially ("bad CPUs are 6 times more likely than bad clocks"). Write the proof's assumptions next to the measurement that tests whether the hardware meets them, and put the place where model and machine diverge in a figure, not a footnote.
 
 ### 4.5 Non-performance properties
 
@@ -155,13 +157,13 @@ vLLM explains that Orca is closed and that Oracle is an infeasible upper bound. 
 
 For each comparative claim, write down the alternative a skeptical engineer would build in a week without the idea, then measure it or argue explicitly why it fails. Ask once per adjacent community (database, compiler, OR, theory, practitioner) what they would use instead. In the cases: a growing contiguous allocator (vLLM), Hadoop plus caching (Spark), equal-budget local search (AlphaTensor), a stitched Horovod plus Clipper pipeline (Ray), a parallel DBMS (MapReduce), warm-started stochastic superoptimization (AlphaDev).
 
-AlphaDev is the instructive positive case. It put that comparison in the main text and conceded where the simpler method (AlphaDev-S) is more efficient. That bought reviewer credibility and did not stop the public critique, which attacked significance ("one MOV"), not method. Baselines answer method objections; they do not answer significance objections. Simulate both critics: the one asking "would something simpler do this?" and the one asking "does this matter?" The second is answered by the opponent and the stakes (SKILL.md stage 2), not by more baselines.
+AlphaDev is the instructive positive case. It put that comparison in the main text and conceded where the simpler method (AlphaDev-S) is more efficient. That bought reviewer credibility and did not stop the public critique, which attacked significance ("one MOV"), not method. Baselines answer method objections; they do not answer significance objections. Simulate both critics: the one asking "would something simpler do this?" and the one asking "does this matter?" The second is answered by the problem and what the work changes in the field (SKILL.md stages 2 and 3), not by more baselines.
 
 ### 5.5 Constructed comparison tables
 
 A design-space table whose axes the authors chose is evidence only if you could lose on some row; the checks are in `argument-architecture.md` §8 (positioning tables).
 
-## 6. Limitations, scope, and lessons
+## 6. Limitations, scope, lessons, and unfinished evaluations
 
 ### 6.1 Placement
 
@@ -173,15 +175,15 @@ A design-space table whose axes the authors chose is evidence only if you could 
 | Future work | HDFS's "our assumption that applications will create a small number of large files was flawed" | Honest but buried |
 | Absent | GFS failover (an hour in practice, per a later interview); AlphaDev's LLVM patch restrictions; AlphaEvolve's evaluator exploitation | Supplied later by critics |
 
-Do both inline and aggregated: the inline caveat for the reader of that claim, the aggregated section for the skimmer and the reviewer writing a summary.
+State the decisive limitation at the claim and in the scope paragraph, for the reader of that claim and for the skimmer; minor caveats once, or not at all. Do not repeat a qualification across sections. Before adding any caveat, ask whether resizing the claim would make it unnecessary; a right-sized claim needs little qualification, and a caveat repeated in several places reads as defense rather than candor (`constructive-narrative.md` §5).
 
 ### 6.2 Candor about everything except the decisive gap
 
-The recurring pattern: papers are candid about costs that do not threaten the headline and quiet about the gap that does. Spanner is candid about double logging and silent about the missing wide-area microbenchmark; vLLM is candid about kernel cost and quiet about the baseline regime. The draft test: name the limitation that, if a reviewer raised it, would most reduce belief in the abstract's first claim. Check that the paper states it, near that claim. A paper full of small admissions and missing the large one reads as candid only until someone finds the large one.
+The recurring pattern: papers are candid about costs that do not threaten the headline and quiet about the gap that does. Spanner is candid about double logging and silent about the missing wide-area microbenchmark; vLLM is candid about kernel cost and quiet about the baseline regime. The draft test: name the limitation that, if a reviewer raised it, would most reduce belief in the abstract's first claim. If it holds, shrink the claim until it no longer threatens it, or check that the paper states it once, plainly, near that claim. A paper full of small admissions and missing the large one reads as candid only until someone finds the large one. Honesty about the decisive limitation is not defensive qualification: one plain statement where it changes belief is information.
 
 ### 6.3 Scope statements
 
-A scope statement is a generality claim with its domain written down; write the non-applicability paragraph before the generality paragraph. `finding-the-contribution.md` §8.3 covers how (RDD §2.4, vLLM §8).
+A scope statement is a generality claim with its domain written down. Work out the non-applicability conditions before writing the generality claim, because they size it; in the paper, state the conditions once, positively where possible, as the conditions under which the idea works. `finding-the-contribution.md` §8.3 covers how (RDD §2.4, vLLM §8).
 
 ### 6.4 Assumption-bound versus universal claims
 
@@ -190,6 +192,10 @@ Claims that aged badly fall into two groups. Assumption-bound claims that stated
 ### 6.5 What makes a lesson worth printing
 
 A lesson earns space when it is tied to a decision that was reversed or kept for a stated reason, written as claim → system-specific evidence → consequence: Bigtable's membership protocol, rewritten until it depended "solely on widely-used Chubby features"; Paxos Made Live's categorized incidents; Borg's lessons, bad ones first, each mapped to a Kubernetes design. Borg's lessons carry no data and hold because the authors are trusted and Kubernetes later worked. A lesson with neither data nor a successor reads as opinion, and the operational tracks reject deployments that "do not reflect deeply". Prefer lessons that challenge a premise over lessons that only motivated a choice; the cases keep the latter and omit the former, so ask the authors directly.
+
+### 6.6 Unfinished evaluation
+
+When experiments have not been run, write the evaluation as the questions it will answer and the experiments that will answer them: the claim each tests, the baseline, the regime, and what result would refute it. Do not write numbers, trends, or outcomes that have not been measured, even as placeholders in result-shaped prose, and do not substitute a walkthrough of the design for evidence. The abstract and introduction then claim only what is built or argued. Mark planned experiments as planned in the claims ledger (status "future"), so that trial by abstract (`finding-the-contribution.md` §9.2) does not count them as evidence. An open evaluation stated this way is part of an honest research account; it is not a gap to be papered over (`constructive-narrative.md` §10).
 
 ## 7. Venue currencies
 
@@ -229,7 +235,7 @@ Treat this as a starting hypothesis. Read three recently accepted papers at the 
 
 Discovery papers owe two debts. Output claims ("a rank-47 scheme exists") are paid by the artifact. Method claims ("RL beats search", "every component matters") need equal-budget comparisons, complete ablations, hit rates (FunSearch reports 4 of 140 cap-set runs) and published negatives, as Tao et al. later supplied by listing all 67 problems including failures.
 
-A paper often mixes types. Name the type of the claim the paper cannot lose, and pay that debt first. Dynamo states its type outright ("the evaluation of how different techniques can be combined"), which tells reviewers which debt to check. If claims need different evaluation environments (simulation vs failure injection vs trace runs), that is a signal to split papers, as Ceph did with CRUSH, RADOS and the integrating OSDI paper.
+A paper often mixes types. Name the type of the claim the paper cannot lose, and pay that debt first. Dynamo states its type outright, once ("the evaluation of how different techniques can be combined"), which makes clear which debt applies. If claims need different evaluation environments (simulation vs failure injection vs trace runs), that is a signal to split papers, as Ceph did with CRUSH, RADOS and the integrating OSDI paper.
 
 ## 9. Maturity, openness, and authority
 
@@ -261,7 +267,7 @@ This assumes a candidate thesis from earlier stages. Context comes before experi
 
 **1. Fix the context and write it as an overturnable assumption.** Venue and track; contribution type of the claim the paper cannot lose (§8); maturity (design-stage, launch, retrospective); openness (closed, code released, checker only); authority for deployment claims. From these, write the currency the context accepts (§7). The authors may overrule it; that is the point of writing it down.
 
-**2. Build the claims ledger with types** (§1), including inferred title-word claims, and mark the one claim the paper cannot lose.
+**2. Build the claims ledger with types** (§1), including inferred title-word claims, and mark the one claim the paper cannot lose. Claims whose experiments are only planned get status "future" (§6.6).
 
 **3. Inventory evidence that already exists.** Internal material holds more than benchmark logs, and the most persuasive items are often not labeled as evidence:
 
@@ -277,17 +283,17 @@ This assumes a candidate thesis from earlier stages. Context comes before experi
 | Specs, model-checking runs | Guarantee claims | The gap between spec and code |
 | Benchmark notebooks | Magnitude; sometimes a surprising proxy/outcome split | Baseline configured by whoever wanted to win |
 
-Map each item to a ledger row. Unmapped evidence is a cut candidate or a sign of a missed claim; unmapped claims are the gaps.
+Map each item to a ledger row. Unmapped evidence is a cut candidate or a sign of a missed claim; unmapped claims are the gaps. The mapping is private: the paper presents each piece of evidence where its claim is made, not as a table of correspondences.
 
 **4. For each gap, choose one of three moves.** (a) Run the isolating experiment (§3), with the idea-removed baseline and the strongest simple alternative. (b) Rescope: write the condition into the claim's own sentence. (c) Move the claim to Discussion as a stated bet with the reason it is plausible. Rescoping is usually cheaper than an experiment and better than an assertion; most of the claims that later needed correction (§6.4) needed move (b), not more data. Move (c) is what Pathways should have done with its motivating workloads.
 
 **5. Spend experiments on the decisive uncertainty.** Rank open gaps by how much belief in the abstract's first claim would drop if a reviewer raised them. Attribution on that claim and the strongest simple alternative come first; breadth comes last. One decoupling table outweighs ten end-to-end bars. Don't spend a week tightening confidence intervals on a number no one doubts.
 
-**6. Add the conservative side and place limitations by threat** (§5.2, §6). Every benefit gets its measured cost; small caveats inline; preconditions in a scope paragraph; the decisive gap next to the claim it qualifies.
+**6. Add the conservative side and place limitations by threat** (§5.2, §6). Every benefit gets its measured cost. The decisive gap goes next to the claim it qualifies (and in the scope paragraph); preconditions go once, in the scope paragraph; minor caveats appear once, inline, or not at all. Resize first: a claim sized to its evidence needs few caveats.
 
 **7. Reconcile numbers across artifacts.** List every public number for the system (blog, README, talks, earlier preprints, the paper) with the baseline and regime each answers. Where two differ, either make them agree or state in the paper which baseline each answers (vLLM's 24× vs 2–4×). Check each evaluated feature against the cited release and each deployment claim against the record. An inconsistent number found by a reviewer costs more than the gap it was meant to hide.
 
-**8. Check the whole.** A fully mapped ledger can still describe the wrong problem: TensorFlow's OSDI evaluation was correct and its bet on deferred execution was not what drove adoption. Ask: if every test here passes, what could I still be wrong about? Typical answers are the problem definition, which property users actually care about, and which premise is about to change. Put the answer in the discussion, and if it touches the thesis, take it back to stage 3 of SKILL.md rather than patching the evaluation.
+**8. Check the whole.** A fully mapped ledger can still describe the wrong problem: TensorFlow's OSDI evaluation was correct and its bet on deferred execution was not what drove adoption. Ask: if every test here passes, what could I still be wrong about? Typical answers are the problem definition, which property users actually care about, and which premise is about to change. Put the answer in the discussion, and if it touches the problem or the thesis, take it back to SKILL.md stages 2–4 rather than patching the evaluation.
 
 For worked examples of this plan applied to real cases, see `worked-transformations.md` move 11 (Borg: telemetry made comparable by one metric) and C3 (Spark: lineage evidence in proportion to its place in the title).
 

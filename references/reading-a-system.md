@@ -1,6 +1,6 @@
 # Reading a system for a paper
 
-Read this when you have a pile of material about a system (docs, specs, RFCs, code, git history, issues, dashboards, postmortems, experiment logs, launch posts) and need to turn it into candidate claims. It covers what to look for, where each kind of source hides it, the order to read in, how not to be captured by the material's own organization, and what to bring to the authors. Its outputs feed `finding-the-contribution.md` and `filtering-and-honesty.md`.
+Read this at stage 1, when you have a pile of material about a system (docs, specs, RFCs, code, git history, issues, dashboards, postmortems, experiment logs, launch posts) and need to turn it into candidate claims. It covers what to look for, where each kind of source hides it, the order to read in, how not to be captured by the material's own organization, and what to bring to the authors. Its outputs feed `finding-the-contribution.md` and `filtering-and-honesty.md`.
 
 ## Contents
 
@@ -32,6 +32,8 @@ Concretely, the reading should leave you with:
 - a short list of **surprising measurements**, each paired with the belief it contradicts;
 - a set of **questions for the authors**, each attached to a candidate framing (§10).
 
+The reading produces material for the paper, not the paper's problem. Every source below is the system's account of itself: what was built, what the team argued about, what surprised them. The research problem is formulated from the field's development, read independently of that account (SKILL.md stage 2; `constructive-narrative.md` §2); the reading tells you what this system can contribute to that problem and with what evidence. Read the relevant literature alongside the system, as a progression of what each line of work achieved and what it left open, not as a list of systems to differentiate from.
+
 None of these is an outline. If you find yourself writing section headings during reading, stop: the outline comes after a thesis exists, and an outline drafted during reading will copy the structure of whatever you were reading.
 
 ## 2. Pin the version before anything else
@@ -52,10 +54,10 @@ The order puts discovery before verification. Each pass has a different job, and
 
 | Pass | Sources | Read for | Produces |
 |---|---|---|---|
-| 1. External claims | Launch posts, READMEs, talks, prior preprints | The numbers practitioners and reviewers have already seen; the baseline practitioners use; the team's own one-line pitch | Claims to reconcile later; a first guess at the opponent |
-| 2. Guarantees and non-goals | Specs, API contracts, "semantics" sections, FAQs, non-goals lists | Invariants and the conditions under which they weaken; scope boundaries | Candidate invariants; draft scope statements |
+| 1. External claims | Launch posts, READMEs, talks, prior preprints | The numbers practitioners and reviewers have already seen; the baseline practitioners use; the team's own one-line pitch | Claims to reconcile later; a first guess at what the work changes |
+| 2. Guarantees and non-goals | Specs, API contracts, "semantics" sections, FAQs, non-goals lists | Invariants and the conditions under which they weaken; scope boundaries | Candidate invariants; the conditions under which the idea works |
 | 3. Alternatives and dead ends | Design docs, RFCs, design-review threads, reverted commits, rewrites, deprecated directories | What the team argued against; what was tried and abandoned and why | Alternatives register (documented entries); dead-end candidates |
-| 4. Surprising measurements | Experiment logs, notebooks, dashboards, A/B rollouts, postmortems, incident counts | Numbers the team found surprising; places where a proxy and the outcome disagree; premises that broke | Opponent candidates; premise register; failures that challenge premises |
+| 4. Surprising measurements | Experiment logs, notebooks, dashboards, A/B rollouts, postmortems, incident counts | Numbers the team found surprising; places where a proxy and the outcome disagree; premises that broke | Candidates for what the work changes; premise register; failures that challenge premises |
 | 5. Code and history | Source at the pinned snapshot; git log, churn, blame | Confirming that chosen mechanisms exist and do what the docs say; locating the component that produces the benefit; stability of interfaces | Verified causal-graph edges; size facts; layer boundaries |
 
 Two reasons for putting code last. First, code is organized by implementation decomposition, and reading it first imports that decomposition as the outline (§6). Second, code answers "how" with great precision and "why" almost never; you need the "why" candidates in hand before the code becomes useful as a check.
@@ -68,7 +70,7 @@ Loop back freely. A surprising measurement in pass 4 often sends you back to pas
 
 - *No design docs or reviews* (common in fast-moving open projects): the "why" has to come from reverts, commit messages, issue threads, and old versions of the project's own descriptions, and then from the people. Expect most alternatives to be reconstructed, and label them so.
 - *No usable history* (a closed system, a squashed import, a monorepo export): rely on successive internal versions of docs, and on sibling or later documents by the same team. The Spanner and Borg case files reconstruct the "real system" from the 2017 SQL paper, Brewer's note, and Omega, which is the best public evidence when code is closed.
-- *No measurements beyond benchmarks*: the surprising-measurement pass comes up empty, and the opponent has to come from design-review objections or the price charged to users. Note early that the paper will need a new experiment to show a proxy and outcome coming apart.
+- *No measurements beyond benchmarks*: the surprising-measurement pass comes up empty, and what the work changes has to come from the field's literature, design-review objections, or the price charged to users. Note early that the paper will need a new experiment to show a proxy and outcome coming apart.
 - *No external claims yet* (pre-launch): you are free of reconciliation constraints, but whatever the paper says first will become the system's public framing (see `filtering-and-honesty.md` on identity).
 
 ## 4. Decision signals in detail
@@ -82,7 +84,7 @@ SKILL.md lists the signals. This section gives, for each, what it looks like in 
 | Removal | "We don't need X"; a deleted subsystem; a component every predecessor had and this one lacks | Is the function really gone, or renamed and moved? | TensorFlow's "no such thing as a parameter server", while deployments still ran "PS tasks" |
 | Invariant or contract | Spec sections on semantics under failure; assertions; model-checking specs; consistency tables | Is the condition under which it weakens stated? | Treating a test suite's coverage as the invariant |
 | Stable interface | Low-churn API files above rewritten internals | Did the interface survive at least one major internal rewrite? | Stable because unused or vendored, not because right |
-| Surprising measurement | "Huh" moments in notebooks; dashboards someone bookmarked; postmortem findings | Does it contradict a belief someone outside the team holds and can be cited for? | Surprising only relative to the team's own earlier guess |
+| Surprising measurement | "Huh" moments in notebooks; dashboards someone bookmarked; postmortem findings | Does it contradict a belief someone outside the team holds and can be cited for? | Surprising only relative to the team's own earlier guess, or to a belief the design needed rather than one the field held |
 | Change of unit | A new granularity in data structures or scheduling (per block, per iteration, per memory access) | Does the new unit explain several design choices at once? | A refactor that changed units without changing what is possible |
 | Price charged to users | Restrictions in user docs ("must be pure", "static shapes"), error messages, "not supported" issues closed as wontfix | Does the restriction buy a property the system depends on? | A missing feature that buys nothing |
 | Dead end that produced a rule | Reverts, abandoned branches, "we tried X first" in design docs | Can the failure be stated as a principle the final design obeys? | A dead end that taught only "this was buggy" |
@@ -91,7 +93,7 @@ SKILL.md lists the signals. This section gives, for each, what it looks like in 
 
 **Removals need a function check.** For each claimed removal, write what the removed component used to do and find where that work happens now. If it happens somewhere, the honest claim is about where it moved and what that bought (TensorFlow's real delta was the same topology with a more general program running on the server tasks), not that it vanished.
 
-**Prices are often the honest form of the idea.** JAX requires pure functions, XLA static shapes, TVM schedule templates, GFS applications that tolerate duplicate records. The XLA/JAX/TVM case notes these obligations were footnotes in each paper and were exactly what later systems changed. Collect them from user-facing docs, error messages, and declined feature requests; each one is both a candidate thesis ("restricting X buys Y") and a scope statement.
+**Prices are often the honest form of the idea.** JAX requires pure functions, XLA static shapes, TVM schedule templates, GFS applications that tolerate duplicate records. The XLA/JAX/TVM case notes these obligations were footnotes in each paper and were exactly what later systems changed. Collect them from user-facing docs, error messages, and declined feature requests; each one is both a candidate thesis ("restricting X buys Y") and a condition under which the idea works.
 
 **Engineering that is necessary but not argument** has its own signals: breadth (model zoos, frontends, backends), operability with no number attached (status pages), ecosystem tooling, parameter defaults, and what the environment provides. Tag it in the inventory rather than discarding it; it often drove adoption, and `filtering-and-honesty.md` covers where it goes.
 
@@ -103,13 +105,13 @@ Extract every number and note the baseline each answers. Extract the one-sentenc
 
 ### Specs, API docs, semantics sections
 
-Look for guarantees stated with conditions. MapReduce's semantics-under-failure section, GFS's consistent/defined table, Spanner's invariants, and Raft's property figure are the most quotable units their papers have. In a new system, these are usually spread across a spec, an FAQ, and comments on a few key functions; assemble them into one list with the weakening conditions next to each. Also collect explicit non-goals: they are free scope statements.
+Look for guarantees stated with conditions. MapReduce's semantics-under-failure section, GFS's consistent/defined table, Spanner's invariants, and Raft's property figure are the most quotable units their papers have. In a new system, these are usually spread across a spec, an FAQ, and comments on a few key functions; assemble them into one list with the weakening conditions next to each. Also collect explicit non-goals: they tell you the conditions under which the idea is meant to work. In the paper, scope is stated once, as those conditions, not as a list of non-goals.
 
 Expect docs to answer "what is it" and "how do I extend it", not "why this and not that". XLA's architecture page lists objectives and pipeline stages and has no alternatives, tradeoffs, or limitations. Treat silence about alternatives in docs as missing data, not as evidence there were none.
 
 ### Design docs, RFCs, design reviews
 
-These are where the opponent is written down, though rarely labeled as one. Read for: the alternatives considered and the stated reason each was rejected; the objection that reviewers raised repeatedly; claims the authors had to defend. Spanner's "an early incarnation supported multiple Paxos state machines per tablet" and GFS's abandoned attempt to persist chunk locations are the kind of entry this material yields.
+These are where the team's view of what it was changing is written down, though rarely labeled as such. It is the system's side of the story: check it against the field before treating it as what the work changes (`finding-the-contribution.md` §1.3, check 5). Read for: the alternatives considered and the stated reason each was rejected; the objection that reviewers raised repeatedly; claims the authors had to defend. Spanner's "an early incarnation supported multiple Paxos state machines per tablet" and GFS's abandoned attempt to persist chunk locations are the kind of entry this material yields.
 
 Read design docs for content, not for order. They are ordered by when decisions were made or by a lineage story (the TensorFlow whitepaper opens with DistBelief history). The paper will be ordered by argument.
 
@@ -131,13 +133,13 @@ Lines of code are a fact, not a ranking. vLLM's 273-line block manager carries t
 
 ### Issue trackers and code review
 
-Read for the objection the team keeps answering. Repeated "why doesn't it support X" issues closed as by design mark the price charged to users. Repeated "this is slow when…" issues mark the regime where the idea stops working, which is the raw material for a "not suitable for" paragraph. User docs that warn the reader something "may be surprising" (PyTorch on putting usability over performance) point straight at the belief under attack.
+Read for the objection the team keeps answering. Repeated "why doesn't it support X" issues closed as by design mark the price charged to users. Repeated "this is slow when…" issues mark the regime where the idea stops working, which is the raw material for stating the conditions under which it works. User docs that warn the reader something "may be surprising" (PyTorch on putting usability over performance) point straight at the belief under attack.
 
 ### Dashboards, telemetry, experiment logs
 
 Look for three things.
 
-- **Numbers the team found surprising**, especially where a believed proxy and the real outcome come apart: FlashAttention's more FLOPs, far less HBM traffic, faster; vLLM's finding that only 20–38% of KV memory in existing systems holds tokens; Dynamo's order-of-magnitude gap between average and 99.9th-percentile latency. A surprising number usually marks a belief the paper can overturn, and it often becomes the paper's bridge figure.
+- **Numbers the team found surprising**, especially where a believed proxy and the real outcome come apart: FlashAttention's more FLOPs, far less HBM traffic, faster; vLLM's finding that only 20–38% of KV memory in existing systems holds tokens; Dynamo's order-of-magnitude gap between average and 99.9th-percentile latency. A surprising number usually marks something the work can change in the field, if someone outside the team holds the contradicted view, and it often becomes the paper's bridge figure.
 - **Distributions, not points.** Fleet-wide or per-cluster distributions resist cherry-picking claims; note where they exist (Borg's compaction results across 15 cells) so evidence design can use them.
 - **Natural experiments.** A/B rollouts, staged deployments, and feature flags can isolate a mechanism's effect without a new experiment. Check what else shipped in the same stage. If the rollout that cut p99 latency also introduced request batching, the null-idea test fails on that data: batching alone could explain the drop. Look for a stage where only one change shipped, or record the confound so the claim can be worded as a joint effect with the idea's share measured or marked unmeasured.
 
@@ -165,12 +167,14 @@ The default failure is an outline isomorphic to whatever was read most: the repo
 
 - **Module structure.** Assign modules to claims before any outline exists. A module that serves no claim goes to the implementation section or out. Rename test: if renaming the repo's top-level directories would change your outline, the outline was captured.
 - **Doc chronology.** Design docs and position papers order material by when it was decided or by lineage. Ray's introduction, inherited from that kind of material, reaches "we propose Ray" in paragraph 7. The paper's order is argument order. Note that reordering raises an honesty question, covered in `filtering-and-honesty.md`.
-- **The docs' voice.** Docs are written for users and extenders. Their vocabulary is useful; their emphasis is not evidence of what is argument-worthy.
+- **The docs' voice.** Docs are written for users and extenders. Their vocabulary helps you understand the system. Neither their emphasis nor their conceptual framework is evidence of what the paper is about.
+- **The system's conceptual framework.** Systems often come with their own conceptual scaffolding: named layers, a mnemonic set, an analogy to cognition or biology, a coined name for the unit of work. Requesters often bring favored concepts in the brief as well. This is the strongest form of capture, because it looks like an idea: a system that ships with its own framework seems to have ideas already. Test: would the problem statement or the section structure change if that vocabulary were removed? If so, the vocabulary is driving the narrative. Treat it as a hypothesis to investigate, not as the paper's frame; keep a term only where it names a construction the reader needs, and introduce it there (`constructive-narrative.md` §4).
+- **The design package's order.** A draft whose sections carry concept titles but follow the design documents' chapters or components is still captured: a design-led retelling. Check by aligning the section list with the design package's table of contents; a near match is capture.
 - **The team's pride and recency.** Authors often guess wrong about which part will last. Ceph led with metadata-server partitioning while RADOS outlived it; Bigtable elevated "single-row transactions suffice" while its data model and SSTable design survived. What the team worked on last or hardest is not thereby the thesis.
 - **Lines of code and effort.** Section length that tracks subsystem size is the catalog failure.
 - **The README's numbers.** External claims are framed for practitioners against what practitioners run. A paper that inherits them inherits their baseline.
 
-A cheap check: after reading, write a 300-word explanation of the system with no component names, and have a fresh reader (or a fresh agent context) state the idea back. If the restatement is a list of components, the reading has not yet found a decision.
+A cheap check: after reading, write a 300-word explanation of the system with no component names and none of the system's internal concept names, and have a fresh reader (or a fresh agent context) state the idea back. If the restatement is a list of components, the reading has not yet found a decision.
 
 ## 7. The inventory with layer tags
 
@@ -195,6 +199,8 @@ A sketch of what the vLLM case's reading yields:
 | Entrypoints, tokenizer, async engine | Usability | HOW | Support | — | High |
 
 The table's value is in the disagreements it exposes: the named component is not the benefit-producing one; the largest subsystem is support; the highest-adoption rows carry no argument. Do not fill every cell for every subsystem. Stop when the rows that matter are clear.
+
+The inventory and the causal graph (§8) organize your understanding. The paper is not organized by them, and none of their rows or cross-references appear in it: no table mapping subsystems to capabilities, no sentence noting which component realizes which concept.
 
 ## 8. The mechanism → capability causal graph
 
@@ -222,7 +228,7 @@ The question is not "is there one idea?" but "is there any organizing principle 
 | What the reading found | Genre | What it needs | Case |
 |---|---|---|---|
 | One root with high fan-out, a disputable belief, an isolating experiment | Idea paper | Mechanism concrete enough to re-implement; toggle or proxy/outcome evidence | MapReduce, FlashAttention, vLLM |
-| Known techniques whose combination meets a requirement nobody met | Synthesis | The requirement made measurable; a problem → technique table; a sentence telling reviewers the contribution is the combination | Dynamo |
+| Known techniques whose combination meets a requirement nobody met | Synthesis | The requirement made measurable; a problem → technique table; the kind of contribution (the combination) stated plainly, once | Dynamo |
 | A mature, revealed system; many policies; one metric that makes them comparable | Concern-organized | Reader questions stated up front; a cross-cutting metric; paired benefit and cost sections; lessons tied to reversed decisions | Borg (cell compaction) |
 | A gap between theory and practice, documented through failures | Experience | A taxonomy of the gap; failures quantified; reusable abstractions extracted | Paxos Made Live |
 | Inherited design, unique operational data, broken premises | Measured system / data | Data no one else has; premises stated and checked against it | HDFS's unused thesis: where an open GFS-style design's assumptions broke |
@@ -239,7 +245,8 @@ SKILL.md lists what only the authors can decide. Reading's job is to turn those 
 
 Bring:
 
-- **Two or three candidate framings**, each with at least its thesis sentence (no system name), the believer it opposes, and the decisive experiment (`finding-the-contribution.md` §9.1). Include one that you think is wrong but plausible; the authors' reason for rejecting it is often the most informative answer.
+- **The problem in the field's terms.** Bring two or three problem statements, each derived from a line of literature (what it achieved, what it left open), and ask which the authors would defend. Ask too which of the system's internal concepts (layer names, frameworks, analogies) they consider essential, and which may appear only where they explain the construction.
+- **Two or three candidate framings**, each with at least its thesis sentence (no system name or internal terms), what it changes in the field with the citation for that state, and the decisive experiment (`finding-the-contribution.md` §9.1). Include one that you think is wrong but plausible; the authors' reason for rejecting it is often the most informative answer.
 - **The reconstructed alternatives**, marked as such, with the question "was this considered, and why was it rejected?". Confirmed ones move to the documented column; the rest stay as analysis.
 - **The suspected load-bearing reasons.** If the reading suggests a decision was made for schedule, team size, or control of all clients rather than for the stated technical reason, ask directly. GFS's single master was "one of the very first decisions, mostly just to simplify the overall design problem", and "we controlled both the horizontal and the vertical" was load-bearing for its relaxed consistency. Neither is in the paper as a condition.
 - **Specific artifacts to explain.** "This revert in March: what broke?" "This config default changed after an incident: what was the incident?" "This dashboard shows a regression at 4K nodes: is that a premise breaking?" Pointing at an artifact gets a factual answer; asking an open question gets the team's current story.

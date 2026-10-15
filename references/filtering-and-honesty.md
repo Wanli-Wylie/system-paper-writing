@@ -1,6 +1,6 @@
 # Filtering and honesty
 
-Read this when you have a candidate thesis and a causal graph and must decide, for every true and substantial thing about the system, whether it gets full treatment, gets demoted, moves to another document, or is left out. Read it again when revising, to check that the cuts and the narrative order have not changed what the paper's claims mean. It covers the filtering rules, the destinations, the honesty tests, and the risks of splitting material across documents.
+Read this at stage 6, when you have a candidate thesis and a causal graph and must decide, for every true and substantial thing about the system, whether it gets full treatment, gets demoted, moves to another document, or is left out. Read it again when revising, to check that the cuts and the narrative order have not changed what the paper's claims mean. It covers the filtering rules, the destinations, the honesty tests, and the risks of splitting material across documents.
 
 ## Contents
 
@@ -28,12 +28,12 @@ Keep a filter ledger with one row per substantial item cut or demoted. The colum
 - **Item** and the **rule** that cut it (§2).
 - **Destination** (§3), decided before the cut is made.
 - **Does its absence change the truth of any claim?** This is the column that matters most. A "yes" means the cut is a cut of qualification (§5) and must be reversed or moved into the claim's sentence.
-- **Does its absence open an attack surface?** If a practitioner would ask about it, either scope it out in one sentence or engage it (§6).
+- **Does its absence open an attack surface?** If a practitioner would ask about it, engage it in the work (§6); in the paper, mention it in one sentence where a reader would look for it.
 - **Did it drive adoption?** If so, record where it will be documented (§4).
 
-Include opponents you chose not to engage and why. MapReduce's omitted relational comparison was a cut of the opponent, not of material, and it was punished publicly three years later.
+Include alternatives you chose not to engage and why. MapReduce's omitted relational comparison was a cut of the opponent, not of material, and it was punished publicly three years later.
 
-The ledger is scaffolding. It is useful while it changes cuts; a complete ledger for the wrong thesis is still the wrong paper.
+The ledger is scaffolding. It is useful while it changes cuts; a complete ledger for the wrong thesis is still the wrong paper. It is back-of-house: the paper shows its results (the right cuts, right-sized claims), never the ledger itself or an account of what was cut.
 
 ## 2. The rules, with evidence
 
@@ -123,13 +123,15 @@ Where the qualification goes matters as much as whether it is present:
 
 - **Inside the sentence that makes the claim**, when it changes the claim's meaning. AlphaEvolve puts its complex-valued caveat in the Table 2 caption; TVM follows its 40× FPGA result with an Amdahl's-law sentence about the end-to-end gain.
 - **Next to the claim it most threatens**, for the limitation that would most reduce belief in the abstract's first claim. Papers tend to be candid about costs that do not threaten the headline (Spanner's "out of expediency" and "not yet implemented" clauses sit in §2, §4, and §7, never in the abstract) and quiet about the one that does.
-- **Also aggregated** in a limitations or scope section, because inline caveats alone are missed by skimming readers (TVM and JAX have only inline caveats).
+- **In a short scope paragraph**, for the decisive limitation and the conditions under which the idea works, because inline caveats alone are missed by skimming readers (TVM and JAX have only inline caveats).
 
-Scope statements are not concessions. RDD's "Applications not suitable for RDDs", vLLM's statement that its techniques may degrade training, and FunSearch's applicability conditions all made the remaining claim harder to attack.
+Each point is made once. A qualification that changes a claim's meaning goes in that claim's sentence. The decisive limitation may appear both at the claim and in the scope paragraph. Minor caveats appear in one place or nowhere. Before adding a qualification, ask whether resizing the claim would make it unnecessary; usually it would. A qualification repeated across sections, or attached to a claim no reader would doubt, is defense, and it reads as uncertainty about the claim (`constructive-narrative.md` §5).
+
+Scope statements are not concessions. RDD's "Applications not suitable for RDDs", vLLM's statement that its techniques may degrade training, and FunSearch's applicability conditions all made the remaining claim more credible, because each states, once, the conditions under which the idea works: a property of the result, not a defense spread through the text.
 
 ## 6. The attack-surface check
 
-The omissions that hurt the classics were not missing features; they were missing comparisons.
+The omissions that hurt the classics were not missing features; they were missing comparisons. This is a check on the work. Its output is a measurement, a resized claim, or a precise understanding of which different problem an alternative solves; it is not a set of paragraphs answering anticipated objections.
 
 | Omission | Who exploited it |
 |---|---|
@@ -142,9 +144,9 @@ The omissions that hurt the classics were not missing features; they were missin
 
 The procedure:
 
-1. **List three things a skeptical practitioner would use instead**, once per adjacent community (databases, compilers, operations research, theory, the practitioner who would just add a cache). FunSearch's hedges read like one per reviewer type.
+1. **List three things a skeptical practitioner would use instead**, once per adjacent community (databases, compilers, operations research, theory, the practitioner who would just add a cache). FunSearch's three applicability conditions answer several communities at once, stated once.
 2. **Check each against the evaluation and related work.** Any alternative absent from both is a future attack surface.
-3. **Engage the strongest operational alternative**: what a practitioner would actually deploy, not the cleanest research foil. Engaging can mean measuring it, or scoping it out in one sentence with a reason, as RDD's "Applications not suitable for RDDs" does by sending asynchronous fine-grained updates to Piccolo, RAMCloud, and Percolator. Scoping out is acceptable; silence is not.
+3. **Engage the strongest operational alternative**: what a practitioner would actually deploy, not the cleanest research foil. Engaging can mean measuring it, or understanding it well enough to say precisely which different problem it solves, as RDD's "Applications not suitable for RDDs" does by sending asynchronous fine-grained updates to Piccolo, RAMCloud, and Percolator. Engagement happens in the work. In the paper, the alternative appears where a reader would genuinely look for it, described by what it does and why this work addresses a different problem or makes a different choice. A paragraph per anticipated objection is defense, not engagement.
 4. **Watch for straw comparison classes.** A category defined so that the live alternative falls outside it (RDD's "DSM", which left MapReduce plus caching unmeasured) or a table on which you lose no row is an omission in disguise. Checks for positioning tables are in `argument-architecture.md` §8; the straw-believer check is in `finding-the-contribution.md` §1.3.
 5. **Simulate the critic of significance as well as the critic of method.** AlphaDev's comparison with its own superoptimizer satisfied method critics; the public critique attacked significance.
 
@@ -175,7 +177,7 @@ The advice literature disagrees: Levin and Redell call a rational derivation tha
 **Documented vs reconstructed alternatives.** Large systems accumulate decisions without records, and an agent is especially tempted to supply plausible alternatives nobody considered and present them as design history. Keep the two voices separate in the text:
 
 - Documented: "We chose X over Y because…" Use only when a design doc, review, revert, or the authors confirm Y was considered.
-- Reconstructed: "An alternative would be Y; it would cost…" This is analysis in its own voice, legitimate and often clearer than the history.
+- Reconstructed: "An alternative would be Y; it would cost…" This is analysis in its own voice, legitimate and often clearer than the history. Include one only where a reader would expect that alternative and it illuminates the choice; multiplied across mechanisms, "one could instead…" paragraphs become defense.
 
 Do not let the second slide into the first during editing. The alternatives register's provenance column exists to prevent it.
 
@@ -184,6 +186,8 @@ Do not let the second slide into the first during editing. The alternatives regi
 **Failures that motivated choices vs failures that challenge premises.** Papers keep the first kind and omit the second, which is a selection effect worth correcting. A hot spot that led to a replication fix makes the design look responsive. A premise that broke in production tells the reader where the design stops applying, which is what they most need. HDFS's "our assumption that applications will create a small number of large files was flawed" is that paper's best candor and sits in future work; it belongs next to the premise it refutes. Ask the authors directly whether premise-challenging failures are known, since docs rarely record them.
 
 **Over-attribution is a narrative problem too.** An abstract whose grammar credits several features to one concept asserts causation. Spanner credits three features to TrueTime; Brewer's later note narrowed that. Check each "enables" against the causal graph before it goes into the abstract.
+
+**Fidelity to design documents is not the paper's job.** Honesty constrains what the paper says about the system: reality status, causation, attribution, release contents. It does not require the paper to mirror the design documents, adopt their terms, cover their components, or show correspondence to them. Check privately that nothing in the paper describes something that does not exist. Mapping the paper's concepts onto design-document entities, in the text, is auditing, and it turns the paper into a design review. Reconciling public numbers and release contents (§11) is different: it is honesty toward readers, and even that work stays invisible in the paper except where a number needs its baseline stated.
 
 ## 9. Disclosing what is withheld
 
@@ -197,7 +201,7 @@ Withholding is often unavoidable. Saying that you withheld, and what compensates
 
 Crediting the nearest predecessor sharpens the claim rather than weakening it, because it tells the reader exactly where to look for what is new.
 
-- **The pattern that works:** one sentence naming the predecessor and one stating the delta. TVM credits Halide's compute/schedule separation and claims "also separating target hardware intrinsics". RDD says it does "not claim novelty for the language-integrated interface" it shares with DryadLINQ, which points the reader at the data-sharing and recovery model instead.
+- **The pattern that works:** one sentence naming the predecessor and one stating the delta, in positive form: what this work builds on, and what it adds. TVM credits Halide's compute/schedule separation and claims "also separating target hardware intrinsics". RDD says, once, that it does "not claim novelty for the language-integrated interface" it shares with DryadLINQ, which points the reader at the data-sharing and recovery model instead. One such sentence about one borrowed part sharpens the claim; a series of novelty disclaimers reads as defense.
 - **The patterns that fail:** credit pushed to acknowledgments or an appendix (FlashAttention's lineage from Apex FMHA), or no credit at all (HDFS never names GFS as its origin, which also removed its most natural thesis).
 - **Owning the predecessor makes criticism cheap and credible.** TensorFlow criticized DistBelief; Ownership used Ray's earlier design as a labeled baseline. When the predecessor belongs to someone else, hedge as TensorFlow did ("other systems based on this architecture have addressed these limitations in other ways").
 - **Inheritance includes borrowed components.** If a kernel, protocol, or library came from elsewhere, say so where it is used. Readers who later find undisclosed lineage reread every novelty claim with suspicion.
@@ -212,10 +216,10 @@ For a large system, the paper is one document in a set. A workable division of l
 
 **The flagship's omissions become the system's identity.** Until another document corrects it, what a widely read paper leaves out is read as what the system lacks or doesn't care about. The Spanner SQL paper had to say "today's Spanner is very different from what was described there". Two defenses:
 
-- **Name deliberate omissions in the flagship.** "We will not go into detail about the query language" tells readers the omission is a choice, not an absence. Dynamo's opening list of production concerns it will not cover does the same.
+- **Mark a deliberate omission where a reader would genuinely look for the topic**, in one sentence. "We will not go into detail about the query language" tells readers the omission is a choice, not an absence. Dynamo's opening list of production concerns it will not cover does the same for a few topics its readers would expect; do not open with an inventory of everything the paper does not cover.
 - **Plan the catch-up document**, and say in the flagship that it exists or is planned ("another paper"), if that is true.
 
-**Keep one reconciliation list across the set.** Every additional document is another place for numbers to disagree (vLLM's blog 24× over HuggingFace vs the paper's 2–4× over research baselines: both true, different baselines).
+**Keep one reconciliation list across the set**, privately. Every additional document is another place for numbers to disagree (vLLM's blog 24× over HuggingFace vs the paper's 2–4× over research baselines: both true, different baselines).
 
 When to split into several papers, in what order, what splitting costs, and what skipping the paper costs (XLA) are in `finding-the-contribution.md` §10.
 

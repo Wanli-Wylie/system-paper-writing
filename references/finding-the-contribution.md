@@ -1,11 +1,11 @@
 # Finding the contribution
 
-Read this at stage 2 (and when stage 3 frames compete): you have read the system for decisions and now must pick what the paper argues against, which concept it lifts into the literature, at which layer, under what name, with how much generality, and whether it is one paper or several. It goes deeper than SKILL.md on each of these; it assumes you already have a list of fan-out decisions, departures, removals, and surprising measurements from reading the system.
+Read this at stage 3 (and when stage 4 frames compete): you have read the system for decisions (stage 1) and formulated the research problem from the field (stage 2), and now must decide what the work changes in the field, which concept it lifts into the literature, at which layer, under what name, with how much generality, and whether it is one paper or several. It goes deeper than SKILL.md on each of these; it assumes you already have a list of fan-out decisions, departures, removals, and surprising measurements from reading the system, and a problem statement that does not depend on the system's own vocabulary. How to formulate that problem, and how to keep problem, means, domain, and object apart, is in `constructive-narrative.md` §2–3.
 
-Opponent choice and concept choice are one decision seen from two sides, and the filter follows from both. The sections below separate them only to make each checkable.
+What the work changes and which concept it lifts are one decision seen from two sides, and the filter follows from both. The sections below separate them only to make each checkable. Everything here is the writer's analysis: the tests, tables, and checks change the work (the size of a claim, an experiment, a scope) and do not appear in the prose.
 
 **Contents**
-1. Choosing the opponent
+1. What the work changes (the "opponent")
 2. Stated gap, real gap, and legitimate elevation
 3. Generating and testing thesis candidates
 4. Kinds of elevated concept: a vocabulary of needs and failure modes
@@ -18,7 +18,9 @@ Opponent choice and concept choice are one decision seen from two sides, and the
 
 ---
 
-## 1. Choosing the opponent
+## 1. What the work changes (the "opponent")
+
+"Opponent" is this file's working term for the state of the field that the work changes: a tradeoff it dissolves, a quantity it recasts, a requirement it meets, an assumption it revises. It is an analytical device for choosing the thesis and designing the evaluation. In the paper it appears as the problem and the field's progress, described by what prior work achieved and what remains open (SKILL.md stage 2). It never appears as a foil to be refuted, and it is never a property that all prior systems are said to lack. In the classic cases the "opponent" was almost always a real state of the field; find it in the literature as it is rather than constructing one.
 
 ### 1.1 Kinds of opponent and what each obliges you to supply
 
@@ -39,13 +41,13 @@ The kind of opponent decides which kind of concept can be elevated and hands you
 Two regularities to use when choosing:
 
 - **Tradeoff opponents produce the cleanest papers**, because the frame fixes both the thesis ("X without sacrificing Y") and the decisive experiment (measure Y). If your system has a defended choice that the field thinks costs something, check first whether it can be framed this way.
-- **Conjunction gaps are the weakest.** "No existing system has A, B and C" (Ray's three RL legs; Pathways' 2x2) lets the authors pick the legs, and it hides a claim that composing existing systems fails. Ray asserted that stitching specialists was "untenable due to the tight coupling" and never tested it; its building-block experiments showed Ray matching each specialist alone, which is a different claim. If you keep a conjunction frame, the experiment you owe is the composition that fails. If you cannot run it, demote the conjunction to motivation and make what you measured the thesis.
+- **Conjunction gaps are the weakest.** "No existing system has A, B and C" (Ray's three RL legs; Pathways' 2x2) lets the authors pick the legs, and it hides a claim that composing existing systems fails. Ray asserted that stitching specialists was "untenable due to the tight coupling" and never tested it; its building-block experiments showed Ray matching each specialist alone, which is a different claim. If you keep a conjunction frame, the experiment you owe is the composition that fails. If you cannot run it, demote the conjunction to motivation and make what you measured the thesis. It is also the commonest manufactured gap: legs chosen so the proposal is the only system with all of them (`constructive-narrative.md` §2.4).
 
 A disclosure gap is legitimate only for a mature system few outsiders have seen, and only with deployment data. A young system that claims "no one has described a system like ours" is borrowing Borg's form without Borg's access.
 
 ### 1.2 Where to find the opponent in the material
 
-The opponent is rarely written down as such. Look in places where the team had to argue:
+The opponent is rarely written down as such. The places below are the system's account of itself: they locate candidates, which the field's literature then confirms or rules out (§1.3, check 5). Look where the team had to argue:
 
 - **Design-doc rationale and rejected alternatives.** What the doc argues against is what a reader believes. Spanner's abandoned early design with multiple Paxos state machines per tablet and GFS's failed attempt to persist chunk locations come from this kind of material.
 - **Predecessors the team owns.** Criticizing your own earlier system is cheap and believable: TensorFlow's §2.1 on DistBelief, Ownership on Ray v0.7.
@@ -54,18 +56,19 @@ The opponent is rarely written down as such. Look in places where the team had t
 - **Rejected or reviewed earlier submissions.** Reviews state the opponent the community actually holds, sometimes more precisely than the authors do (Raft's 2012 reviewers on understandability).
 - **The decision an outsider would call a mistake.** Its defense names the belief it contradicts.
 
-Write the result as one sentence: a belief a competent reader holds that this work shows false or incomplete. If the only sentence available is "system X is slower than ours", you have a benchmark result. Either find the belief that makes X's slowness surprising or interesting, or accept that the paper is a different genre (§9 of this file; stage 3 of SKILL.md).
+Write the result as one sentence: what the work changes in the field's current state (a belief shown false or incomplete, a tradeoff dissolved, a requirement met, a quantity recast), with a citation for that state. If the only sentence available is "system X is slower than ours", you have a benchmark result. Either find the state of the field that makes X's slowness surprising or interesting, or accept that the paper is a different genre (§9 of this file; stage 4 of SKILL.md).
 
 ### 1.3 The straw-believer check
 
-An opponent nobody holds wins every comparison and persuades no one. Run four checks on the sentence you wrote:
+An opponent nobody holds wins every comparison and persuades no one. Run five checks on the sentence you wrote:
 
 1. **Can you cite a believer?** Spanner writes "Some authors have claimed that general two-phase commit is too expensive" and then measures 2PC up to 200 participants (Table 4). TF OSDI states the "commonly held belief that asynchronous replication is required" and runs synchronous training with backup workers. If you cannot point to a paper, a system's documented design, or a widely used default that embodies the belief, treat the opponent as unconfirmed.
 2. **Would the believer recognize their view in your sentence?** Rephrasing an incumbent's position into its weakest form is the usual way straw men enter. RDD defines "DSM" as any shared state with fine-grained writes, a category that loses its comparison table cleanly while the live alternative (MapReduce plus caching) goes undiscussed.
-3. **Is it the opponent practitioners act on?** The strongest operational alternative, what a skeptical practitioner would use instead, must appear even if only to be scoped out. MapReduce never discussed relational databases, and DeWitt and Stonebraker supplied the comparison three years later. vLLM's gain depends on a baseline that reserves the maximum length per request; a contiguous allocator that grows dynamically is dismissed rather than measured.
+3. **Is it the opponent practitioners act on?** The strongest operational alternative, what a skeptical practitioner would use instead, must be engaged in the work: measured, or understood well enough to say precisely which different problem it solves. In the paper it appears where it illuminates the problem or a design choice, described by what it does well. MapReduce never discussed relational databases, and DeWitt and Stonebraker supplied the comparison three years later. vLLM's gain depends on a baseline that reserves the maximum length per request; a contiguous allocator that grows dynamically is dismissed rather than measured.
 4. **Is a weakened version labeled as such?** Using your own old design as a baseline is fine when labeled (Ownership's baselines are named Ray v0.7 variants). Presenting it as the field's state of the art is not.
+5. **Did the field hold this belief, or did your design need it?** A belief reconstructed to justify an existing architecture usually describes the architecture's premise rather than anyone's view. If the believer appears only after you have described the system, the gap is manufactured; go back to the field (SKILL.md stage 2).
 
-If a check fails, the fix is usually to strengthen the opponent, not the prose: state the strongest version, measure against it, and let the thesis shrink to what survives. A smaller claim against a real believer beats a larger claim against a category you defined.
+If a check fails, the fix is usually to strengthen the opponent, not the prose: state the strongest version, measure against it, and let the thesis shrink to what survives. A smaller claim against a real believer beats a larger claim against a category you defined. The output of these checks is a different claim or a new measurement, stated plainly; it is not a paragraph in the paper arguing with the believer.
 
 ---
 
@@ -92,7 +95,7 @@ Elevation is how an engineering fact becomes a claim others can use. RDD climbed
 - It reaches only the lower gap: either lower the stated gap, or add the experiment that reaches the higher one.
 - The higher gap is a vision no experiment can reach yet: label it as a vision in its own sentence, and make the measured result the thesis.
 
-Also check the direction of causation in the gap story (GFS's "driven by" workload observations; see `filtering-and-honesty.md` §8). The real gap often contains a load-bearing condition (GFS: the team controlled every client) that belongs in the paper as a scope statement.
+Also check the direction of causation in the gap story (GFS's "driven by" workload observations; see `filtering-and-honesty.md` §8). The real gap often contains a load-bearing condition (GFS: the team controlled every client) that belongs in the paper as a condition of the claim, stated once.
 
 Over-elevation and under-elevation are both failures. Over: the concept is bigger than the evidence ("beyond human intuition", "first to unify" untested). Under: the paper never leaves the real gap's level and reads as a catalog of fixes to one deployment (HDFS).
 
@@ -110,7 +113,7 @@ Run the routes independently, then look for agreement. Each one has a characteri
 |---|---|---|
 | Trace the headline capability back to the decision it depends on (Spanner: three features → meaningful timestamps → TrueTime; MapReduce: fault tolerance → safe re-execution → determinism → restriction) | The dependency root, the concept whose removal takes down the most capabilities | Favors the mechanism the team is proudest of; can over-attribute (Spanner credited TrueTime with snapshot reads that rest mainly on multiversioning) |
 | Find the decision an outsider would call a mistake, which the team defends (GFS's single master, PyTorch's eager execution, Spanner waiting deliberately) | The reader belief, plus a defense already half-written in design reviews | Can surface contrarian choices that were expedient, not principled |
-| Find the distinction engineers use to explain behavior (narrow vs wide dependencies; consistent vs defined; three kinds of KV waste) | A middle-layer vocabulary that explains several mechanisms at once | The distinction may be internal jargon with no reader belief behind it |
+| Find the distinction engineers use to explain behavior (narrow vs wide dependencies; consistent vs defined; three kinds of KV waste) | A middle-layer vocabulary that explains several mechanisms at once | The distinction may be internal jargon, or part of the team's conceptual framework, with no reader belief or field problem behind it |
 | Watch what gets re-cut across versions (TVM v1's four challenges regrouped into two when the learned cost model arrived; Spark's broadcast variables and accumulators gone by 2012) | What keeps being promoted; what keeps being demoted is also a signal | Recent promotions are often the least tested part (TVM's comparison table was built so the proposal loses on no row) |
 | Check what the evidence can carry (TVM's clean ablation, Fig. 12; Pathways' parity; RDD's Fig. 11 as the only lineage-isolating result) | The thesis you can actually defend | Can shrink the paper to its most measurable, least interesting claim |
 | Tell it aloud to someone without context (Fox: a short talk before writing) and note what they repeat back | What a reader finds new, which authors often misjudge | Listeners repeat what is vivid, not what is load-bearing |
@@ -121,21 +124,23 @@ A candidate that turns up through dependency tracing, a contested choice, and te
 
 | Test | Passes | Fails | What to do on failure |
 |---|---|---|---|
-| Name removal | "Expose clock uncertainty as an interval and wait it out"; "manage the KV cache as virtual memory"; CRUSH (Ceph appears once, in future work) | "HDFS's architecture"; Borg's thesis needs "Google" | Restate at the WHAT layer; if impossible, the paper is concern-organized or experience-type, and needs a unifying metric or gap taxonomy instead |
+| Name removal (system name and internal vocabulary) | "Expose clock uncertainty as an interval and wait it out"; "manage the KV cache as virtual memory"; CRUSH (Ceph appears once, in future work) | "HDFS's architecture"; Borg's thesis needs "Google"; a thesis that needs the system's own layer names or coined terms to be stated | Restate at the WHAT layer in the field's vocabulary; if impossible, the paper is concern-organized or experience-type, and needs a unifying metric or gap taxonomy instead |
+| Means removal | "Serve more requests per GPU by not wasting KV-cache memory" (paging is the means, introduced with the idea) | "Use learning to decide X", "apply search to Y": the technique is the problem statement | Restate what is improved, and for whom; move the technique to the ideas. A technique that occurs at every scale of computing defines no problem by itself |
+| Object | FlashAttention: the attention computation is the object, long-sequence models the motivation | A paper scoped to one application domain (genomics pipelines, a trading platform) while its mechanism acts on a general computation or resource | Scope the subject by the computational object so the result transfers; keep the domain as motivation (`constructive-narrative.md` §3) |
 | Reimplementation | Hadoop, HDFS, HBase rebuilt from Google papers; OpenEvolve rebuilt AlphaEvolve from a figure and one-liners | Undisclosed parameters (Borg's score function); a closed substrate with no stated contract | Add the one mechanism a rebuilder would need; state the contract the substrate must provide (Pathways' list of PLAQUE's required properties) |
 | Refutability | PyTorch's "10% slower acceptable, 100% not"; "HBM accesses determine runtime"; Spanner's commit-wait cost | TF's "flexibility" (case studies only); TVM's "production use inside several major companies" | Put a price, bound, or condition on the claim; a non-performance property needs an exchange rate or a proxy |
-| Ancestry | RDD disclaims DryadLINQ's interface; TVM's one-sentence delta over Halide; Dynamo's explicit combination claim | AlphaTensor with no fixed-compute search baseline; HDFS never names GFS as its origin | Name the nearest respected predecessor, credit it, give the delta in one sentence; disclaim what you borrowed |
+| Ancestry | RDD disclaims novelty for DryadLINQ's interface, once; TVM's one-sentence delta over Halide; Dynamo's explicit combination claim | AlphaTensor with no fixed-compute search baseline; HDFS never names GFS as its origin | Name the nearest respected predecessor and credit it in positive form: what this work builds on, and what it adds, in one sentence |
 | Explanatory reach | TrueTime yields three features; paging yields fragmentation, sharing, and swap | PagedAttention-the-kernel explains nothing the block manager doesn't | It is a mechanism, not a thesis; look one step upstream on the dependency chain |
 | Isolation | MapReduce: backup tasks off → 44% slower; FlashAttention Fig. 2 | Ray's unification; Pathways' motivating workloads | Design the toggle or decomposition; if none is possible, lower the claim to what the whole-system number supports |
 | Layer | Ray's task/actor/futures API | Ray's GCS on the critical path | See §6 |
 
-Weight name removal and reimplementation above the others. A statement without the system's name is what lets a reader who has never seen the codebase grasp the idea; reimplementability is the practical evidence that the idea was transmitted. Refutability and isolation decide whether the claim survives review. Passing all seven shows the candidate is well-formed, not that it is the right one; that is settled by comparing frames (§9).
+Weight name removal, means removal, and reimplementation above the others. A statement without the system's name or internal terms is what lets a reader who has never seen the codebase grasp the idea; a problem stated without the technique is what lets them judge whether the idea is a good answer to it; reimplementability is the practical evidence that the idea was transmitted. Refutability and isolation decide whether the claim survives review. Passing all nine shows the candidate is well-formed, not that it is the right one; that is settled by comparing frames (§9). A thesis that passes every test but comes with no literature and no construction is an essay, not a systems paper.
 
 ---
 
 ## 4. Kinds of elevated concept: a vocabulary of needs and failure modes
 
-The cases lift at least ten different kinds of thing into the literature. Use this section to ask "how does my concept earn attention, what must I supply for it to be believed, and how do concepts like it get attacked?" Do not use it to pick a box and fill it. Each entry gives why the kind earns attention, what it needs, and how it fails.
+The cases lift at least ten different kinds of thing into the literature. Use this section to ask "how does my concept earn attention, what must I supply for it to be believed, and how do concepts like it get attacked?" Do not use it to pick a box and fill it. The kinds are lenses for asking what a claim needs and how it fails; they are not forms for the prose, and none of them requires coining a term or building a conceptual system. Each entry gives why the kind earns attention, what it needs, and how it fails.
 
 **K1. A restriction or removal that buys properties.** MapReduce; RDD; Ceph's CRUSH (placement by function instead of table); FunSearch's fixed skeleton.
 - *Earns attention* because the restriction makes a runtime mechanism legal: determinism makes re-execution safe; coarse-grained writes make lineage sufficient for recovery. The system is the existence proof.
@@ -168,14 +173,14 @@ The cases lift at least ten different kinds of thing into the literature. Use th
 - *Fails* when the property is claimed by definition and adoption substitutes for evidence (PyTorch was accepted as "an exposition"; Raft's 2012 version had "essentially no objective evidence").
 
 **K7. A premise register.** GFS (observations, then numbered assumptions); Ceph; Dynamo §2.1.
-- *Earns attention* because a messy design reads as a derivation, and readers can decide whether it applies to them. GFS's method aged better than its conclusions because the assumptions were explicit: a reader can see which premise broke.
+- *Earns attention* because readers can see why a messy design has its shape and decide whether it applies to them. GFS's method aged better than its conclusions because the assumptions were explicit: a reader can see which premise broke.
 - *Needs* measured, true premises and the boundary condition everything rests on (GFS never wrote that the team controlled every client).
-- *Fails* when premises change (honest but dated), or when premises were written afterward to cover a different cause.
+- *Fails* when premises change (honest but dated), when premises were written afterward to cover a different cause, or when the register is written so the design follows. Premises must be observed facts, not axioms chosen to derive the design; a register of definitions from which requirements are derived and then satisfied is the deduction-driven failure (`constructive-narrative.md` §6).
 
 **K8. A synthesis with a requirements vocabulary.** Dynamo ("the main contribution ... is the evaluation of how different techniques can be combined"); PyTorch §2's converging trends.
 - *Earns attention* by saying plainly what kind of contribution it is. A problem-technique-advantage table maps the whole before any mechanism; paragraphs follow "textbook version, what breaks here, our variant".
 - *Needs* production credibility or a famous gap.
-- *Fails* when the mechanisms don't persist (DynamoDB kept little of the architecture), leaving vocabulary as the durable content. Expect the "no one big idea" review and answer it in the contribution-type sentence.
+- *Fails* when the mechanisms don't persist (DynamoDB kept little of the architecture), leaving vocabulary as the durable content. Expect the "no one big idea" review; state the contribution's kind once, plainly, and it then needs no defense.
 
 **K9. Organization by reader concern, with a unifying metric.** Borg; much of Bigtable. HDFS is the failed version.
 - *Earns attention* for a mature, revealed system whose value is spread across many choices: the reader's questions give the spine; one cross-cutting metric (cell compaction) turns unrelated policies into one cost; benefit sections are paired with cost sections; lessons map to successor designs.
@@ -213,11 +218,11 @@ When combining, check that both kinds generate the same spine. If one kind wants
 The kinds are a record of what worked in the case studies behind this skill, not a closed list. If nothing fits, do not stretch the closest kind; derive its needs and failure modes directly by answering these:
 
 1. **What object does a reader carry away and use without your system?** A rule, contract, quantity, formulation, boundary, invariant, vocabulary, design space, or discovery. If you cannot name the object, there is no elevated concept yet; go back to the routes in §3.1.
-2. **What does that object change for the reader?** What they can predict, what they may rely on, what they count, what they assume, or what they believe a method can do. (This grouping of the kinds is my representation; it is a prompt, not a taxonomy.) The answer tells you what belief you are writing against.
+2. **What does that object change for the reader?** What they can predict, what they may rely on, what they count, what they assume, or what they believe a method can do. (This grouping of the kinds is my representation; it is a prompt, not a taxonomy.) The answer tells you what the work changes in the field's current state.
 3. **What would a skeptic need to believe it?** Name the evidence type: a toggle inside the system, a proxy/outcome split, a proof, a checker, telemetry against a stated contract, reimplementation by others. This is the kind's "needs".
 4. **What is the cheapest way it could be false, and what is the cheapest alternative that would get the same result?** For a discovery, a simpler search with equal budget; for a mechanism, the design a competent engineer would build in a week without the idea. This is the kind's main failure mode.
 5. **Which replaceable part is it tied to?** If the object only makes sense with one implementation detail, it is at the HOW layer (§6).
-6. **What is its boundary?** Write the "not suitable for" paragraph now. If you cannot, the concept is not yet understood well enough to claim.
+6. **What is its boundary?** Write down, for yourself, the conditions under which it does not apply. If you cannot, the concept is not yet understood well enough to claim. In the paper, these become one positive statement of the conditions under which the idea works (§8.3).
 
 If question 1 has no answer after honest effort, the right outcome may be a concern-organized or experience paper with a unifying metric or gap taxonomy, a documentation-type report that states its lineage and where its assumptions broke (the paper HDFS could have written from its own §IV-V), or a blog and docs rather than a paper. Inventing a concept to fill the slot produces a slogan the evidence cannot carry.
 
@@ -247,7 +252,7 @@ Specification-layer claims (interfaces, formulations, metrics, requirements, inv
 
 **How to cut the layers so the durable part can be lifted:**
 
-- **State the concept as a contract before describing its realization.** TrueTime's three-method table, Raft's Figure 2 specification, Bigtable's data model. A reader should be able to reimplement the WHAT against a different HOW.
+- **State the concept as a contract before describing its realization.** TrueTime's three-method table, Raft's Figure 2 specification, Bigtable's data model. A reader should be able to reimplement the WHAT against a different HOW. This applies where the contribution is an interface, protocol, or contract a reader will program against or check; a formal statement of something nobody uses is artificial formalization (`argument-architecture.md` §11).
 - **Describe your dependencies by the contract you use, and ask the same of your own concept.** Megastore and Spanner reused Bigtable through its interface as Bigtable used GFS. Pathways listed what its closed substrate must provide and argued Ray could host the design; untested, but it detached the idea from the substrate.
 - **Keep the thesis off components on the roadmap for replacement.** Read the roadmap and open issues. If a component is about to be rewritten, either do not make it the thesis or label it as a snapshot. Ray tied a principle ("centralize control state") to the GCS, which its own later whitepaper inverted.
 - **Give secondary WHAT-level results their own standing.** AlphaTensor's 14,236 nonequivalent factorizations survive a lower rank found elsewhere; Ceph gave RADOS its own paper.
@@ -260,14 +265,15 @@ This is conditional on maturity. A young system can and should state its WHAT an
 
 ## 7. Naming
 
-Names are where a concept detaches from its system, and in the cases naming is one of the main mechanisms of elevation, not decoration.
+Names are where a concept detaches from its system, and in the cases a good name for a real construction is one of the ways a concept is lifted, not decoration. Coining is not elevation, though: elevation goes toward the field's problem, and a name only helps once there is an idea to carry. Titles, which are names for the whole paper, are covered in `constructive-narrative.md` §8.
 
-- **Use two names: one for the idea, one for the artifact.** IO-aware / FlashAttention; the sorted map / Bigtable. The idea's name must pass name removal; the artifact's need not. When only the artifact has a name, readers cite the artifact and the idea stays attached to one implementation.
+- **Name sparingly.** A name earns its place when it is a handle for a construction the reader will use repeatedly, or a quantity they will measure. Coined names for the research stance, for the paper's conceptual framework, or for pairs of operations inside the system produce conceptual packaging. The system's internal names are not paper names by default.
+- **When helpful, use two names: one for the idea, one for the artifact.** IO-aware / FlashAttention; the sorted map / Bigtable. The idea's name must pass name removal; the artifact's need not. When only the artifact has a name, readers cite the artifact and the idea stays attached to one implementation.
 - **Put the name on the component that produces the benefit.** PagedAttention names the kernel, which is slower in isolation; the benefit comes from the block manager. Check the name against your ablation: if the ablation credits a different component, rename or re-cut.
 - **The name should predict the mechanism and the layer.** TrueTime names the API, and the API is the thesis. TVM's added "Automated" named the novelty it could evaluate. A name that predicts the wrong mechanism misleads every later citation.
 - **Name a weakness to turn it into a design space.** GFS's consistent / defined / undefined table converts "weak consistency" into a precise middle ground; Dynamo's (N, R, W) turns a relaxation into a dial users can set. If your system gives up a guarantee, a named vocabulary for exactly what it gives up is often the most transferable thing in the paper.
 - **Know the risks of each name type.** Slogans ("no such thing as a parameter server", "bottom-up scheduler") are memorable and can reduce to renaming. A coined workload term is a bet about workloads (JAX's PSC; the project dropped it). Naming micro-discoveries (AlphaDev's "swap move") gives critics a precise object to check, which cuts both ways.
-- **If you do not name and frame your work, someone else will.** XLA published no framing paper; TVM categorized it as a "graph-level DSL", MLIR as one fragment, and a 2023 third-party paper's first contribution was describing its fusion, which "has not yet been well described in public papers or documents". Competitors also chose the configuration in which it was benchmarked.
+- **If you do not name and frame your work, someone else will.** XLA published no framing paper; TVM categorized it as a "graph-level DSL", MLIR as one fragment, and a 2023 third-party paper's first contribution was describing its fusion, which "has not yet been well described in public papers or documents". Competitors also chose the configuration in which it was benchmarked. This argues for publishing a clear problem and idea, not for coining terms.
 
 Diagnostics: can the named concept be explained in one paragraph to someone who has never heard of the system? Does the name attach to the component that produces the benefit? Would it still be accurate after the implementation is rewritten?
 
@@ -308,7 +314,7 @@ Only the first two belong in the abstract and contributions list. The other two 
 
 A generality claim is credible in proportion to the boundary drawn around it. Stating where the idea does not apply raises trust: RDD §2.4 hands asynchronous fine-grained updates to RAMCloud, Percolator, and Piccolo, which converts "RDDs are general" into "RDDs cover batch, bulk-write workloads", a claim its evidence supports. vLLM §8 says why the paging analogy holds (dynamic, memory-capacity-bound workloads) and that it "may rather degrade the performance" for training.
 
-Write the non-applicability paragraph before the generality paragraph. Generalize the WHAT over a class defined by its premises, not the system over a domain ("for workloads where X and Y hold" rather than "for distributed storage"). Include the load-bearing condition from the real gap (§2) if there is one. A scope statement written last tends to list harmless limitations; candor in the cases is common about costs that don't threaten the headline and rare about the gap that does. Name the limitation that would most reduce belief in the abstract's first claim, and scope against that one.
+Work out the non-applicability conditions before writing the generality claim, because doing so sizes the claim. In the paper, state the conditions once, in positive form where possible ("the approach applies when …"), next to the generality claim or in a short scope paragraph. A scope statement is a property of the result. A scattered series of "we do not claim" and "this is not" sentences is defense, and it reads as uncertainty about the claim (`constructive-narrative.md` §5). Generalize the WHAT over a class defined by its premises, not the system over a domain ("for workloads where X and Y hold" rather than "for distributed storage"). Include the load-bearing condition from the real gap (§2) if there is one. A scope statement written last tends to list harmless limitations; candor in the cases is common about costs that don't threaten the headline and rare about the gap that does. Name, to yourself, the limitation that would most reduce belief in the abstract's first claim, and size the claim against that one: shrink it until the limitation no longer threatens it, or state the limitation once, plainly, where the claim is made.
 
 ---
 
@@ -316,7 +322,7 @@ Write the non-applicability paragraph before the generality paragraph. Generaliz
 
 ### 9.1 Generating frames
 
-Draft two or three frames on purpose. For each, write at least the thesis sentence (without the system's name), the cited believer, and the decisive experiment; those are where frames usually differ. Add the kind of concept, the layer, the venue, or the genre (idea, synthesis, concern-organized, experience, instrument, measured system; see `reading-a-system.md` §9) when the frames differ on them, and skip any field that does not help you choose. Spark's three framings of the same code show that frames usually differ in evidence needs, not in truth. TensorFlow's two documents show that a venue can force the choice: OSDI needed a differentia and experiments, which moved the parameter server from related work to the central foil.
+Draft two or three frames on purpose. For each, write at least the problem statement, the thesis sentence (without the system's name or internal terms), what the work changes with its citation, and the decisive experiment; those are where frames usually differ. Add the kind of concept, the layer, the venue, or the genre (idea, synthesis, concern-organized, experience, instrument, measured system; see `reading-a-system.md` §9) when the frames differ on them, and skip any field that does not help you choose. Spark's three framings of the same code show that frames usually differ in evidence needs, not in truth. TensorFlow's two documents show that a venue can force the choice: OSDI needed a differentia and experiments, which moved the parameter server from related work to the central foil.
 
 Keep at least one rejected frame alive until the trial below. Ask explicitly what drove the system's adoption. If the thesis and the adoption driver differ, accept that deliberately and plan where the adoption driver will be documented. TensorFlow-OSDI passed every local test against the frame it chose and was mispositioned against what drove adoption (eager execution, where PyTorch placed itself).
 
@@ -333,7 +339,7 @@ For each frame, write a full abstract using only claims from the claims ledger, 
 
 Freeze a frame once it passes trial by abstract and its decisive experiment is in hand or scheduled. Endless reframing and premature freezing are both process failures; the freeze rule exists so that drafting can proceed with a stable claim set.
 
-Reopen only on a named trigger. The five that reshaped the classic papers, each with the question to simulate before a reviewer does:
+Reopen only on a named trigger. The first five reshaped the classic papers; the sixth is common in practice. Each comes with the question to simulate before a reviewer does:
 
 | Trigger | Case | Question |
 |---|---|---|
@@ -342,6 +348,9 @@ Reopen only on a named trigger. The five that reshaped the classic papers, each 
 | Demand for evidence of the headline | Raft 2012 → 2014; PyTorch reviews | What experiment would a skeptic outside our community accept? |
 | Attack on an omitted comparison | MapReduce vs DBMS; AlphaTensor vs flip graphs | What would an expert in each adjacent field use instead? |
 | System outgrowing the paper | Ray → Ownership; Dynamo → DynamoDB | Which claims depend on a mechanism scheduled for replacement? |
+| The authors reject the conception | (no classic case; common in practice) | What problem does the field pose that this work addresses? Answer it from the literature, not from the old draft |
+
+The last trigger calls for re-conception, not revision. When the authors reject a draft's conception (design-led, deduction-driven, defensive throughout, or addressing the wrong problem), editing its sentences, retitling its sections, or keeping its example and structure produces the same paper. Start again from SKILL.md stage 2, treat the old draft as evidence of what failed, and carry over facts, not its sentences, structure, examples, or coined terms (`constructive-narrative.md` §9). This is a named trigger, not endless reframing.
 
 Add one more simulation: if a competitor beats your headline record next month with a cheaper method, what remains? A record is a wasting asset as a headline; a structural finding or reusable formulation is not (AlphaTensor partly hedged with its nonequivalent factorizations and the formulation).
 

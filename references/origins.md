@@ -1,6 +1,6 @@
 # Origins
 
-For maintainers: the study this Skill came from, the cases it read, how the Skill was built from it, and what it rests on. Nothing in the Skill depends on this file; the case evidence the Skill uses is carried in the other references.
+For maintainers: the two sources this Skill came from, the cases the first one read, how the Skill was built and later revised, and what it rests on. Nothing in the Skill depends on this file; the case evidence the Skill uses is carried in the other references.
 
 ## Contents
 
@@ -8,6 +8,7 @@ For maintainers: the study this Skill came from, the cases it read, how the Skil
 - [The case set](#the-case-set)
 - [How the study ran](#how-the-study-ran)
 - [How the Skill was built](#how-the-skill-was-built)
+- [The second source: reviews of agent-written drafts](#the-second-source-reviews-of-agent-written-drafts)
 - [What it rests on](#what-it-rests-on)
 
 ## The question
@@ -42,9 +43,23 @@ Cases were chosen for academic significance, design complexity, and the availabi
 
 `SKILL.md` was written from the four syntheses. The seven references were written in parallel against it, each from the syntheses and case studies relevant to one stage, and each author reported where `SKILL.md` should change to stay consistent; those changes were made. A final pass checked about sixty case facts and section references against the studies, removed duplication between references, and softened places that had hardened into fill-in forms. No formal evaluation loop was run.
 
+## The second source: reviews of agent-written drafts
+
+The case study looked at finished papers and the systems behind them. It could not see what a draft written from a system reads like before anyone has shaped it, or how a paper constructs its problem from the field rather than defends a claim. The second source supplies that view: an author's reviews of successive agent-written drafts of one systems paper. Each review judged a whole draft and set directions for the next, so the sequence shows which failures persisted across rounds, which fixes introduced new failures, and what the author accepted as a research paper.
+
+The revision ran in three steps:
+
+1. **Extraction.** One agent read the drafts and the reviews together and extracted the author's preferences about constructive narrative, tracing each preference through the sequence of drafts (what a draft did, what the review said, what the next draft changed) and restating it in a form that applies to any systems paper.
+2. **Audit.** A second agent read the Skill in full against those preferences and listed where its guidance conflicted with them, where a literal reading would produce the rejected behavior, and where it was silent. Each item came with proposed text, and the audit separated genuine conflicts from apparent ones that a distinction resolves (honest scope versus defensive qualification, private checks versus printed audit text).
+3. **Revision.** `SKILL.md` was revised first: the reader's narrative separated from the writer's analysis, a stage for formulating the problem from the field, a third failure pole (Defense), and a stance on defending in the work rather than in the prose. The references were then revised in parallel to match, and `references/constructive-narrative.md` was added. Sound evidence guidance from the case study (the null-idea test, attribution, baselines, honest versus revisionist causation) was kept; what changed is where its output lands.
+
+The drafts and reviews are not reproduced in the Skill. No project names, titles, quotations, or internal concepts from them appear in it, and its illustrations of the new guidance use other domains.
+
 ## What it rests on
 
 - **Survivorship.** Apart from HDFS and the XLA material, the cases are influential papers. Their influence also owed something to authority, scale, access and timing that a new group may not have; the Skill weights evidence-producing moves above authority-dependent ones for that reason.
 - **Inferred process.** No case documents its authors' internal writing process. Claims about how papers were reshaped are inferred from differences between versions, from retrospectives and from critiques.
 - **Secondhand reading.** Some sources were unavailable or read only through summaries; claims flagged as unverified in the studies were left out of the Skill or kept with their hedge.
-- **Diagnosis over generation.** The material is stronger at telling that a frame is wrong than at producing a good one where no recorded move fits. The Skill has not yet been applied end to end to an unpublished system; the first such application is the most useful next revision.
+- **Critique-weighted evidence.** The case study's strongest evidence is where critics struck: omitted baselines, untested conjunctions, over-attributed numbers. That weights the case-derived guidance toward defensive checks and says little about how a paper constructs its problem from the field. Followed as voice rather than as checks, it produces defensive prose. The second source was added to cover the constructive side, and the Skill now routes the checks' output into the work (claim size, experiments, scope) rather than into the text.
+- **A strong but narrow second source.** The reviews are one author's judgment on one paper. The signal is strong, because it comes from direct review of whole drafts rather than from inference across versions, and because the failures it names recurred across rounds. It is also narrow: venues and advisors differ in how much explicit scoping, qualification, and formal structure they expect, and the drafts were written by agents, so the guidance is weighted toward the failures agents make (anchoring on a brief's vocabulary, writing checks into prose, following a design package's order). Where the Skill's voice guidance and a target venue's recently accepted papers disagree, the venue's papers are the better evidence for that venue.
+- **Diagnosis over generation.** The material is stronger at telling that a frame is wrong than at producing a good one where no recorded move fits. The drafts behind the second source were written before the revision, so the revised Skill has not itself been applied end to end to an unpublished system; that application is the most useful next revision.
